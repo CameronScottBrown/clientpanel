@@ -48,4 +48,18 @@ export class ClientDetailsComponent implements OnInit {
     this.flashMessage.show('Balance updated!', {cssClass: 'alert-success', timeout: 4000});
   }
 
+  onDeleteClick(){
+    if(confirm('Are you sure?')){
+      
+      //call service
+      this.clientService.deleteClient(this.client);
+      //show flash success
+      this.flashMessage.show('Client successfully removed.', { cssClass: 'alert-success', timeout: 2500});
+      
+      //reroute to dashboard
+      this.router.navigate(['/']);
+
+    }
+  }
+
 }

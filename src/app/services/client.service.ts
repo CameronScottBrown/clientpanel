@@ -63,8 +63,17 @@ export class ClientService {
   }
 
   updateClient(client: Client) {
+    //set doc
     this.clientDoc = this.afs.doc<Client>(`clients/${client.id}`);
+    //update doc
     this.clientDoc.update(client);
+  }
+
+  deleteClient(client: Client) {
+    //set doc
+    this.clientDoc = this.afs.doc<Client>(`clients/${client.id}`);
+    //delete doc
+    this.clientDoc.delete();
   }
 
 }
