@@ -13,15 +13,17 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AppComponent } from './app.component';
 
+import { AuthGuard } from './guards/auth.guard';
+import { RegisterGuard } from './guards/register.guard';
 
 const routes: Routes = [
- {path: '', component: DashboardComponent },
- {path: 'register', component: RegisterComponent },
+ {path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+ {path: 'register', component: RegisterComponent, canActivate: [RegisterGuard] },
  {path: 'login', component: LoginComponent },
- {path: 'client/add', component: AddClientComponent },
- {path: 'client/edit/:id', component: EditClientComponent },
- {path: 'client/:id', component: ClientDetailsComponent },
- {path: 'settings', component: SettingsComponent },
+ {path: 'client/add', component: AddClientComponent, canActivate: [AuthGuard] },
+ {path: 'client/edit/:id', component: EditClientComponent, canActivate: [AuthGuard] },
+ {path: 'client/:id', component: ClientDetailsComponent, canActivate: [AuthGuard] },
+ {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
  {path: '**', component: NotFoundComponent }
 ];
 
@@ -32,6 +34,9 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes)
   ],
-  declarations: []
+  providers: [
+    AuthGuard,
+    RegisterGuard
+  ]
 })
 export class AppRoutingModule { }
