@@ -8,12 +8,34 @@ export class SettingsService {
   settings: Settings = {
     allowRegistration: true,
     disableBalanceOnAdd: true,
-    disableBalanceOnEdit: false
+    disableBalanceOnEdit: true
   }
 
-  constructor() { }
+  constructor() { 
+    if(localStorage.getItem('settings') != null){
+      this.settings = JSON.parse(localStorage.getItem('settings'));
+    }
+  }
 
   getSettings(): Settings{
-    return this.settings;
+    let settingsCopy:Settings = {
+      allowRegistration:this.settings.allowRegistration,
+      disableBalanceOnAdd:this.settings.disableBalanceOnAdd,
+      disableBalanceOnEdit:this.settings.disableBalanceOnEdit
+    }
+
+    return settingsCopy;
+  }
+
+  changeSettings(settings: Settings) {
+    let settingsCopy:Settings = {
+      allowRegistration:settings.allowRegistration,
+      disableBalanceOnAdd:settings.disableBalanceOnAdd,
+      disableBalanceOnEdit:settings.disableBalanceOnEdit
+    }
+ 
+    localStorage.setItem('settings', JSON.stringify(settingsCopy));
+    this.settings = settingsCopy;
+    
   }
 }
